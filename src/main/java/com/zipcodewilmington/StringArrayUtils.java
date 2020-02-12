@@ -1,6 +1,6 @@
 package com.zipcodewilmington;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by leon on 1/29/18.
@@ -83,7 +83,39 @@ public class StringArrayUtils {
      * @return true if each letter in the alphabet has been used in the array
      */ // TODO
     public static boolean isPangramic(String[] array) {
-        ArrayList<Character> alphabet = new ArrayList<>();
+        
+    	// Apparently Nobles said no lists so I present to you this garbage instead
+    	
+    	Character[] alphabetArr = new Character[]{ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    	Character[] emptyAlphabet = new Character[1];
+    	
+    	int iterator = 0;
+    	for (String s : array) {
+    		for (Character c : s.toCharArray()) {
+    			boolean foundDupe = false;
+    			if (emptyAlphabet.length > 25) {
+    				return true;
+    			}
+    			for (Character emptyC : emptyAlphabet) {
+    				
+    				if (emptyC != null && emptyC.toString().toLowerCase() == c.toString().toLowerCase()) {
+    					foundDupe = true;
+        				break;
+    				}
+    			}
+    			
+    			if (!foundDupe) {
+    				if (Character.isAlphabetic(c)) {
+    					Character[] temp = Arrays.copyOf(emptyAlphabet, emptyAlphabet.length + 1);
+    					emptyAlphabet = temp;
+        				emptyAlphabet[iterator] = Character.toLowerCase(c);
+        				iterator++;
+    				}    				
+    			}
+    		}
+    	}
+    	
+    	/*ArrayList<Character> alphabet = new ArrayList<>();
         alphabet.add('a');
         alphabet.add('b');
         alphabet.add('c');
@@ -127,9 +159,12 @@ public class StringArrayUtils {
                 }
             }
         }
+        
         return alphabet.size() < 1;
+        */
+        return emptyAlphabet.length > 25;
     }
-
+    
     /**
      * @param array array of String objects
      * @param value value to check array for
